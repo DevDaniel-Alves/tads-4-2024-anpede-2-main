@@ -5,13 +5,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.anpede.dto.AssociadoDTO;
 import com.anpede.entities.Associado;
 import com.anpede.repositories.AssociadoRepository;
-import com.anpede.services.exceptions.EntityNotFoundException;
+import com.anpede.services.exceptions.DataBaseException;
+import com.anpede.services.exceptions.RecourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
@@ -83,14 +87,21 @@ public class AssociadoService {
 			entity = repository.save(entity);
 			return new AssociadoDTO(entity);
 			
-		} catch(jakarta.persistence.EntityNotFoundException e) {
-			throw new EntityNotFoundException("O recurso com o ID "+id
+		} catch(EntityNotFoundException e) {
+			throw new RecourceNotFoundException("O recurso com o ID "+id
 					+" não foi localizado");
 		}
 	}
 	
 	public void delete(Long id) {
-		repository.deleteById(id);		
+		try {
+		repository.deleteById(id);
+		}
+		catch(EmptyResultDataAccessException e) {
+			throw new RecourceNotFoundException("O recurso com o ID "+ id +"não foi encontrado");
+		}catch (DataIntegrityViolationException e) {
+			throw new DataBaseException("Violação de integridade, você não pode excluir esté arquivo");
+		}
 	}
 
 	

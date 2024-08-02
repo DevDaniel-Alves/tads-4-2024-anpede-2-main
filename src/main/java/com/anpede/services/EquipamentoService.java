@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.anpede.dto.EquipamentoDTO;
 import com.anpede.entities.Equipamento;
 import com.anpede.repositories.EquipamentoRepository;
-import com.anpede.services.exceptions.EntityNotFoundException;
+import com.anpede.services.exceptions.RecourceNotFoundException;
 
 
 @Service
@@ -30,7 +30,7 @@ public class EquipamentoService {
 	public EquipamentoDTO findById(Long id) {
 		Optional<Equipamento> obj = repository.findById(id);
 		Equipamento entity = obj.orElseThrow(() -> 
-			new EntityNotFoundException("O registro não localizado na base de dados"));
+			new RecourceNotFoundException("O registro não localizado na base de dados"));
 		return new EquipamentoDTO(entity);
 	}
 	
