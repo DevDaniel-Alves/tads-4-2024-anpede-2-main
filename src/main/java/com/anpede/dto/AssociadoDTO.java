@@ -17,7 +17,7 @@ public class AssociadoDTO implements Serializable {
 	private String endereco;
 	
 	public AssociadoDTO() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public AssociadoDTO(Long id, String nome, String cPF, LocalDate dataNascimento, String telefone, String email,
