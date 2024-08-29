@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,64 +19,86 @@ public class Emprestimo implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	private LocalDate dataRetidada;
+	private Long id;
+	private LocalDate dataRetirada;
 	private LocalDate dataDevolucao;
-	private Equipamento Equipamento;
 	private String motivo;
 	
+	@ManyToOne
+	private Associado associado;
+	
+	@ManyToOne
+	private EquipamentoItem equipamentoItem;
 	
 	public Emprestimo() {
-		
+		// TODO Auto-generated constructor stub
 	}
-	public Emprestimo(long id, LocalDate dataRetidada, LocalDate dataDevolucao,
-			com.anpede.entities.Equipamento equipamento, String motivo) {
+
+	public Emprestimo(Long id, LocalDate dataRetirada, LocalDate dataDevolucao, EquipamentoItem equipamentoItem,
+			String motivo) {
 		super();
 		this.id = id;
-		this.dataRetidada = dataRetidada;
+		this.dataRetirada = dataRetirada;
 		this.dataDevolucao = dataDevolucao;
-		Equipamento = equipamento;
+		this.equipamentoItem = equipamentoItem;
 		this.motivo = motivo;
 	}
 	
-	public long getId() {
+	
+
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public LocalDate getDataRetidada() {
-		return dataRetidada;
+
+	public LocalDate getDataRetirada() {
+		return dataRetirada;
 	}
-	public void setDataRetidada(LocalDate dataRetidada) {
-		this.dataRetidada = dataRetidada;
+
+	public void setDataRetirada(LocalDate dataRetirada) {
+		this.dataRetirada = dataRetirada;
 	}
-	
+
 	public LocalDate getDataDevolucao() {
 		return dataDevolucao;
 	}
+
 	public void setDataDevolucao(LocalDate dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
-	
-	public Equipamento getEquipamento() {
-		return Equipamento;
-	}
-	public void setEquipamento(Equipamento equipamento) {
-		Equipamento = equipamento;
-	}
-	
+
 	public String getMotivo() {
 		return motivo;
 	}
+
 	public void setMotivo(String motivo) {
 		this.motivo = motivo;
 	}
+
+	public Associado getAssociado() {
+		return associado;
+	}
+
+	public void setAssociado(Associado associado) {
+		this.associado = associado;
+	}
+
+	public EquipamentoItem getEquipamentoItem() {
+		return equipamentoItem;
+	}
+
+	public void setEquipamentoItem(EquipamentoItem equipamentoItem) {
+		this.equipamentoItem = equipamentoItem;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -85,7 +108,9 @@ public class Emprestimo implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Emprestimo other = (Emprestimo) obj;
-		return id == other.id;
+		return Objects.equals(id, other.id);
 	}
+	
+	
 
 }

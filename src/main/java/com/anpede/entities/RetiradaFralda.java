@@ -8,51 +8,87 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_retiradafralda")
-public class RetiradaFralda implements Serializable{
-	
-	private static final long SerialVersionUID = 1L;
+@Table(name = "tb_retirada_fralda")
+public class RetiradaFralda implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private Integer quantidade;
-	private LocalDate dataRetida;
+	private LocalDate dataRetirada;
+	
+	@ManyToOne
+	private Associado associado;
+	
+	@ManyToOne
+	private Fralda fralda;
+	
 	
 	public RetiradaFralda() {
-		
+		// TODO Auto-generated constructor stub
 	}
-	public RetiradaFralda(long id, Integer quantidade, LocalDate dataRetida) {
+
+	public RetiradaFralda(Long id, Integer quantidade, LocalDate dataRetirada, Associado associado) {
 		super();
 		this.id = id;
 		this.quantidade = quantidade;
-		this.dataRetida = dataRetida;
+		this.dataRetirada = dataRetirada;
+		this.associado = associado;
 	}
-	public long getId() {
+	
+	
+	
+	public Fralda getFralda() {
+		return fralda;
+	}
+
+	public void setFralda(Fralda fralda) {
+		this.fralda = fralda;
+	}
+
+	public Associado getAssociado() {
+		return associado;
+	}
+
+	public void setAssociado(Associado associado) {
+		this.associado = associado;
+	}
+
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Integer getQuantidade() {
 		return quantidade;
 	}
+
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	public LocalDate getDataRetida() {
-		return dataRetida;
+
+	public LocalDate getDataRetirada() {
+		return dataRetirada;
 	}
-	public void setDataRetida(LocalDate dataRetida) {
-		this.dataRetida = dataRetida;
+
+	public void setDataRetirada(LocalDate dataRetirada) {
+		this.dataRetirada = dataRetirada;
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -62,7 +98,9 @@ public class RetiradaFralda implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		RetiradaFralda other = (RetiradaFralda) obj;
-		return id == other.id;
+		return Objects.equals(id, other.id);
 	}
 	
+	
+
 }
